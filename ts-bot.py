@@ -1,6 +1,7 @@
 import logging
 import os
 import requests
+import time
 
 from telegram import Update, Message
 from telegram.ext import Application, ApplicationHandlerStop, CommandHandler, ContextTypes, MessageHandler, TypeHandler, filters
@@ -95,7 +96,7 @@ async def get_live_message(context: ContextTypes.DEFAULT_TYPE) -> Message:
                 live_msg = await context.bot.edit_message_text(
                     chat_id=chat_id,
                     message_id=message_id,
-                    text="Initializing..."
+                    text=f"Initializing...{time.time()}"
                 )
                 logger.info("Live message created from chat ID in file.")
                 context.bot_data["live_msg"] = live_msg
