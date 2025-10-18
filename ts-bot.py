@@ -168,8 +168,16 @@ async def update_live_message(context: ContextTypes.DEFAULT_TYPE):
             context.bot_data["live_msg"] = await live_msg.edit_text(text, parse_mode="MarkdownV2")
         return
 
-async def broadcast_message(context: ContextTypes.DEFAULT_TYPE):
+
+async def global_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
     """Broadcast message to all users on server"""
+
+    ts_url = context.bot_data["ts_url"]
+    ts_apikey = context.bot_data["ts_apikey"]
+    msg = update.message.text
+
+    ts_global_message(ts_url, ts_apikey, msg)
 
 
 async def check_perms(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -208,7 +216,7 @@ def main() -> None:
     application.add_handler(CommandHandler("whoami", whoami_command))
     application.add_handler(CommandHandler("ts", ts_get_users))
     application.add_handler(CommandHandler("tslive", ts_get_users_live))
-    application.add_handler(CommandHandler("gm", ts_global_message))
+    application.add_handler(CommandHandler("gm", global_message))
 
     # Run the bot until the user presses Ctrl-C
     application.run_polling(allowed_updates=Update.ALL_TYPES)
