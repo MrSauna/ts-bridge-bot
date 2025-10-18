@@ -37,7 +37,7 @@ def get_user_list(url: str, apikey: str) -> list[str]:
     return sorted(active_nicknames, key=str.lower), sorted(away_nicknames, key=str.lower)
 
 
-def ts_sanifize(msg: str) -> str:
+def ts_sanitize(msg: str) -> str:
     """sanitize for teamspeak"""
     s = msg.replace(' ', '\\s')
     s = s.replace('&', '\&')
